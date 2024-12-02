@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class MeasuredAspect {
+public class TimeAspect {
 
     private final MetricsService metricsService;
 
