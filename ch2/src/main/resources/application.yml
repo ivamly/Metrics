@@ -1,0 +1,31 @@
+spring:
+    application:
+        name: "Metrics"
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+    prometheus:
+        metrics:
+            export:
+                enabled: true
+
+server:
+    port: 8080
+
+time-annotations:
+    endpoints:
+        /endpoint1:
+            ids:
+                - id1
+                - id2
+        /endpoint2:
+            ids:
+                - id3
+                - id4
+        /endpoint3:
+            ids:
+                - id5
+                - id6
