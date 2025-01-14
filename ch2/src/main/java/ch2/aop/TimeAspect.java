@@ -1,7 +1,7 @@
-package ch1.aop;
+package ch2.aop;
 
-import ch1.annotation.Time;
-import ch1.service.MetricsService;
+import ch2.annotation.Time;
+import ch2.service.MetricsService;
 import io.micrometer.core.instrument.Timer;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -17,7 +17,7 @@ public class TimeAspect {
 
     private final MetricsService metricsService;
 
-    @Around("@annotation(ch1.annotation.Time)")
+    @Around("@annotation(ch2.annotation.Time)")
     public Object measureExecutionTime(ProceedingJoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String methodName = methodSignature.getMethod().getName();

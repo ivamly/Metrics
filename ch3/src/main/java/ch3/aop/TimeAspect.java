@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 @Aspect
 @Component
@@ -21,20 +20,20 @@ public class TimeAspect {
     private final MetricsService metricsService;
 
     @Around("@annotation(ch3.annotation.Time)")
-    public Object measureExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object measureExecutionTime(ProceedingJoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String methodName = methodSignature.getMethod().getName();
         String factoryId = getFactoryId(joinPoint.getArgs());
 
         Timer timer = metricsService.getOrCreateTimer(methodName, factoryId);
 
-        long startTime = System.currentTimeMillis();
-        try {
-            return joinPoint.proceed();
-        } finally {
-            long endTime = System.currentTimeMillis();
-            timer.record(endTime - startTime, TimeUnit.MILLISECONDS);
-        }
+        return timer.record(() -> {
+            try {
+                return joinPoint.proceed();
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private String getFactoryId(Object[] args) {

@@ -9,10 +9,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 @Aspect
 @Component
@@ -27,20 +26,20 @@ public class TimeAspect {
             "@annotation(org.springframework.web.bind.annotation.DeleteMapping) ||" +
             "@annotation(org.springframework.web.bind.annotation.PatchMapping) ||" +
             "@annotation(org.springframework.web.bind.annotation.RequestMapping)")
-    public Object measureExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object measureExecutionTime(ProceedingJoinPoint joinPoint) {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         String methodName = method.getName();
         String factoryId = getFactoryId(joinPoint.getArgs());
 
         Timer timer = metricsService.getOrCreateTimer(methodName, factoryId);
 
-        long startTime = System.currentTimeMillis();
-        try {
-            return joinPoint.proceed();
-        } finally {
-            long endTime = System.currentTimeMillis();
-            timer.record(endTime - startTime, TimeUnit.MILLISECONDS);
-        }
+        return timer.record(() -> {
+            try {
+                return joinPoint.proceed();
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private String getFactoryId(Object[] args) {

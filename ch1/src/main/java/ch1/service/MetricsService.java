@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 @Service
@@ -15,11 +14,11 @@ import java.util.Map;
 public class MetricsService {
 
     private final MeterRegistry meterRegistry;
-    private final Map<String, Map<String, Timer>> timerMap = new HashMap<>();
+    private final ConcurrentHashMap<String, ConcurrentHashMap<String, Timer>> timerMap = new ConcurrentHashMap<>();
 
     public void createTimer(String methodName, String factoryId) {
         timerMap
-                .computeIfAbsent(methodName, k -> new HashMap<>())
+                .computeIfAbsent(methodName, k -> new ConcurrentHashMap<>())
                 .computeIfAbsent(factoryId, f -> Timer.builder("CUSTOM.MEASURED")
                         .tag("CUSTOM.METRIC.METHOD", methodName)
                         .tag("CUSTOM.METRIC.FACTORY", factoryId)

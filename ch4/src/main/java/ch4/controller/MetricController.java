@@ -12,13 +12,16 @@ public class MetricController {
 
     @PostMapping("/endpoint1")
     public void endpoint1(@RequestBody Request request) {
+        // Логика для endpoint1
     }
 
     @PostMapping("/endpoint2")
     public void endpoint2(@RequestBody Request request) {
+        // Логика для endpoint2
     }
 
     @PostMapping("/endpoint3")
     public void endpoint3(@RequestBody Request request) {
+        // Логика для endpoint3
     }
 }

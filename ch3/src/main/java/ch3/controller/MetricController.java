@@ -14,15 +14,18 @@ public class MetricController {
     @Time
     @PostMapping("/endpoint1")
     public void endpoint1(@RequestBody Request request) {
+        // Логика эндпоинта 1
     }
 
     @Time
     @PostMapping("/endpoint2")
     public void endpoint2(@RequestBody Request request) {
+        // Логика эндпоинта 2
     }
 
     @Time
     @PostMapping("/endpoint3")
     public void endpoint3(@RequestBody Request request) {
+        // Логика эндпоинта 3
     }
 }

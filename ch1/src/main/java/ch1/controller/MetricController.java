@@ -11,18 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/metrics")
 public class MetricController {
 
-    @Time(ids = {}, endpoint = "")
+    @Time(ids = {"client_1", "client_2"}, endpoint = "/endpoint1")
     @PostMapping("/endpoint1")
     public void endpoint1(@RequestBody Request request) {
+        // Логика обработки запроса
     }
 
-    @Time(ids = {}, endpoint = "")
+    @Time(ids = {"client_3", "client_4"}, endpoint = "/endpoint2")
     @PostMapping("/endpoint2")
     public void endpoint2(@RequestBody Request request) {
+        // Логика обработки запроса
     }
 
-    @Time(ids = {}, endpoint = "")
+    @Time(ids = {"client_5", "client_6"}, endpoint = "/endpoint3")
     @PostMapping("/endpoint3")
     public void endpoint3(@RequestBody Request request) {
+        // Логика обработки запроса
     }
 }

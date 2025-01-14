@@ -36,6 +36,7 @@ public class TimeAnnotationBeanPostProcessor implements BeanPostProcessor, Order
     }
 
     private void processTimeAnnotation(Time timeAnnotation, Method method) {
-        Arrays.stream(timeAnnotation.ids()).forEach(id -> metricsService.createTimer(method.getName(), id));
+        Arrays.stream(timeAnnotation.ids()).forEach(
+                id -> metricsService.createTimer(method.getName(), id));
     }
 }

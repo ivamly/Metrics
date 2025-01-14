@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class MetricController {
 
     @PostMapping("/endpoint1")
-    @Time(endpoint = "")
+    @Time(endpoint = "endpoint1")
     public void endpoint1(@RequestBody Request request) {
     }
 
     @PostMapping("/endpoint2")
-    @Time(endpoint = "")
+    @Time(endpoint = "endpoint2")
     public void endpoint2(@RequestBody Request request) {
     }
 
     @PostMapping("/endpoint3")
-    @Time(endpoint = "")
+    @Time(endpoint = "endpoint3")
     public void endpoint3(@RequestBody Request request) {
     }
 }
